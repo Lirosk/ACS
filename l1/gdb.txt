@@ -1,0 +1,9 @@
+1. (gdb) set /*var*/ = /*value*/ 
+2. (gdb) b /*номер строки или название функции*/
+3. (gdb) next
+4. (gdb) step
+5. (gdb) c
+6. (gdb) p /*var*/
+7. (gdb) display /*var*/
+8. (gbd) i locals
+9. (gbd) q или <Ctrl>+D

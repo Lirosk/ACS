@@ -3,6 +3,11 @@
 bool ll_has_cycle(node *head) {
     /* Ваш код должен быть написан только внутри этой функции */
 
+    if (!head)
+    {
+        return false;
+    }
+
     node* rabbit = head;
     node* turtle = head;
 

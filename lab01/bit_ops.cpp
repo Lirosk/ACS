@@ -15,7 +15,7 @@ void set_bit(unsigned * x,
              unsigned v) {
     // YOUR CODE HERE
 
-    v = v & (unsigned)1;
+    v &= (unsigned)1;
     *x = ((*x) & (~(1 << n))) | (v << n);
 }
 // Меняет значение бита номер n на противоположное.

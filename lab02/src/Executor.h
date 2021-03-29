@@ -45,29 +45,12 @@ public:
 			}
 		}
 
-	/*
-	Unsupported,
-    Alu,
-    Ld,
-    St, +
-    J, +
-    Jr, +
-    Br,
-    Csrr, +
-    Csrw, +
-    Auipc +
-	*/
-
-		
-
 		/*"блок логики"*/
 		if (instr->_type != IType::Unsupported && instr->_type != IType::Alu
 		&&  instr->_type != IType::Ld          && instr->_type != IType::Br)
 		{
 			ITypes[instr->_type](instr);
-		}
-
-		
+		}	
 
         /*"блок ветвелния"*/
 		if (instr->_src1 && instr->_src2)

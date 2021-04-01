@@ -237,6 +237,16 @@ TEST_SUITE("Executor"){
         }
     }
     /* YOUR CODE HERE */
+    TEST_CASE("J-FORMAT")
+    {
+        SUBCASE("JAL")
+        {
+            //                               imm[20]  imm[10:1]     imm[11]  imm[19:12]  rd
+            //                          0b   0_       00000011111_  0_       00000000_   00111_ 1101111
+            auto instruction = _decoder.Decode(0b000000011111000000000001111101111);
+            testUJ(instruction, _exe);
+        }
+    }
 }
 
 void testAlu(InstructionPtr &instruction, Executor &exe){

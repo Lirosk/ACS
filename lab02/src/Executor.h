@@ -11,13 +11,6 @@ public:
     void Execute(InstructionPtr& instr, Word ip)
     {
         /* YOUR CODE HERE */
-        
-        /*"вычисление Instruction->{_data, _addr, _nextIp}"*/
-
-		fprintf(stderr, "\n\nip is %d\n", ip);
-
-		//for IType::{J, Jr, Auipc}
-		instr->_nextIp = ip;
 
 		Word dataCopied = instr->_data;
 
@@ -45,45 +38,47 @@ public:
 			}
 		}
 
-		/*"блок логики"*/
-		if (instr->_type != IType::Unsupported && instr->_type != IType::Alu
-		&&  instr->_type != IType::Ld          && instr->_type != IType::Br)
+		/*блок логики*/
+		switch(instr->_type)
 		{
-			ITypes[instr->_type](instr);
-		}	
+			case(IType::Csrr):
+			case(IType::Csrw):
+			case(IType::St):
+			case(IType::J):
+			case(IType::Jr):
+			case(IType::Auipc):
+				ITypes[instr->_type](instr, ip);
+				break;
+		}
 
-        /*"блок ветвелния"*/
-		if (instr->_src1 && instr->_src2)
+		/*блок ветвления*/
+		if ((instr->_brFunc == BrFunc::AT || instr->_brFunc == BrFunc::NT || (instr->_src1 && instr->_src2))
+			&& BrFuncs[instr->_brFunc](instr->_src1Val, instr->_src2Val))
 		{
-			if (BrFuncs[instr->_brFunc](instr->_src1Val, instr->_src2Val))
+		switch (instr->_type)
 			{
-				switch (instr->_type)
-				{
-				case IType::Br:
-				case IType::J:
-					instr->_nextIp = ip + *(instr->_imm);
-					break;
-				case IType::Jr:
-					instr->_nextIp = instr->_src1Val + *(instr->_imm);
-					break;
-				default:
-					break;
-				}
-			}   
-			else
-			{
-				instr->_nextIp = ip + 4;
-			}     
+			case IType::Br:
+				instr->_nextIp = ip + *(instr->_imm);
+				break;
+			case IType::J:
+				instr->_nextIp = ip + *(instr->_imm);
+				break;
+			case IType::Jr:
+				instr->_nextIp = instr->_src1Val + *(instr->_imm);
+				break;
+			default:
+				break;
+			}
 		}
 		else
 		{
 			instr->_nextIp = ip + 4;
-		}		
+		}
     }
 
 private:
     /* YOUR CODE HERE */
-    
+
     std::map<AluFunc, void(*)(Word, Word, Word&)> AluFuncs
     {
     	{
@@ -158,11 +153,11 @@ private:
     	}	
     };
 
-	std::map<IType, void(*)(InstructionPtr&)> ITypes
+	std::map<IType, void(*)(InstructionPtr&, Word)> ITypes
 	{
 		{
 			IType::Csrr,
-			[](InstructionPtr& instr)
+			[](InstructionPtr& instr, Word ip)
 			{
 				instr->_data = instr->_csrVal;
 				//instr->_addr = instr->_csrVal;
@@ -170,7 +165,7 @@ private:
 		},
 		{
 			IType::Csrw,
-			[](InstructionPtr& instr)
+			[](InstructionPtr& instr, Word ip)
 			{
 				instr->_data = instr->_src1Val;
 				//instr->_addr = instr->_src1Val;
@@ -178,7 +173,7 @@ private:
 		},
 		{
 			IType::St,
-			[](InstructionPtr& instr)
+			[](InstructionPtr& instr, Word ip)
 			{
 				instr->_data = instr->_src2Val;
 				//instr->_addr = instr->_src2Val;
@@ -186,29 +181,28 @@ private:
 		},
 		{
 			IType::J,
-			[](InstructionPtr& instr)
+			[](InstructionPtr& instr, Word ip)
 			{
-				instr->_data = instr->_nextIp + 4;
+				instr->_data = ip + 4;
 				//instr->_addr = instr->_nextIp + 4;
 			}
 		},
 		{
 			IType::Jr,
-			[](InstructionPtr& instr)
+			[](InstructionPtr& instr, Word ip)
 			{
-				instr->_data = instr->_nextIp + 4;
+				instr->_data = ip + 4;
 				//instr->_addr = instr->_nextIp + 4;
 			}
 		},
 		{
 			IType::Auipc,
-			[](InstructionPtr& instr)
+			[](InstructionPtr& instr, Word ip)
 			{
-				instr->_data = instr->_nextIp + *(instr->_imm);
+				instr->_data = ip + *(instr->_imm);
 				//instr->_addr = instr->_nextIp + *(instr->_imm);
 			}
-		},
-
+		}
 	};
 
 	std::map<BrFunc, bool(*)(Word, Word)> BrFuncs

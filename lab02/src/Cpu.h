@@ -50,11 +50,7 @@ public:
 		_csrf.InstructionExecuted();
     	
     	/*"обновление регистров в CsrFile"*/
-    	//_csrf.Reset();
-    	
     	/*"вычисление нового _ip"*/
-    	//_ip = instr->_nextIp;
-
 		Reset(instr->_nextIp);
     }
 

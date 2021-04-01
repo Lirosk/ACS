@@ -156,6 +156,21 @@ public:
 private:
     using Imm = int32_t;
 
+    /*
+    Imm AlsoSignExtend(Imm i, unsigned sbit)
+    {
+        Imm a = 2 << sbit; //a = 2^(sbi + 1)
+        Imm b = a / 2;
+
+        if (((unsigned)i % a) >= b)
+        {
+            return i - a;
+        }
+
+        return i;
+    }
+    */
+
     Imm SignExtend(Imm i, unsigned sbit)
     {
         return i + ((0xffffffff << (sbit + 1)) * ((i & (1u << sbit)) >> sbit));

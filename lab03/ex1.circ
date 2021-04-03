@@ -201,7 +201,7 @@ end TCL_Generic;
       <a name="output" val="true"/>
     </comp>
     <comp lib="1" loc="(370,200)" name="AND Gate"/>
-    <comp lib="1" loc="(440,200)" name="NOT Gate"/>
+    <comp lib="1" loc="(400,200)" name="NOT Gate"/>
     <comp lib="8" loc="(350,128)" name="Text">
       <a name="text" val="PUT CIRCUITRY HERE"/>
     </comp>
@@ -209,8 +209,7 @@ end TCL_Generic;
     <wire from="(240,220)" to="(320,220)"/>
     <wire from="(300,170)" to="(300,180)"/>
     <wire from="(300,180)" to="(320,180)"/>
-    <wire from="(370,200)" to="(410,200)"/>
-    <wire from="(440,200)" to="(460,200)"/>
+    <wire from="(400,200)" to="(460,200)"/>
   </circuit>
   <circuit name="NOR1">
     <a name="appearance" val="logisim_evolution"/>
@@ -307,7 +306,7 @@ end TCL_Generic;
       <a name="label" val="RESULT"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="1" loc="(350,290)" name="NOT Gate"/>
+    <comp lib="1" loc="(350,220)" name="NOT Gate"/>
     <comp lib="1" loc="(400,200)" name="AND Gate"/>
     <comp lib="1" loc="(400,270)" name="AND Gate"/>
     <comp lib="1" loc="(550,240)" name="OR Gate"/>
@@ -324,8 +323,8 @@ end TCL_Generic;
     <wire from="(270,290)" to="(270,300)"/>
     <wire from="(270,290)" to="(300,290)"/>
     <wire from="(300,220)" to="(300,290)"/>
-    <wire from="(300,220)" to="(350,220)"/>
-    <wire from="(300,290)" to="(320,290)"/>
+    <wire from="(300,220)" to="(320,220)"/>
+    <wire from="(300,290)" to="(350,290)"/>
     <wire from="(400,200)" to="(460,200)"/>
     <wire from="(400,270)" to="(460,270)"/>
     <wire from="(460,200)" to="(460,220)"/>

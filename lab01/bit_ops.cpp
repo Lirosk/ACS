@@ -5,7 +5,6 @@
 unsigned get_bit(unsigned x,
                  unsigned n) {
     // YOUR CODE HERE
-    
     return (x>>n) & (unsigned)1;
 }
 // Выставляет значение v в бите номер n
@@ -14,7 +13,6 @@ void set_bit(unsigned * x,
              unsigned n,
              unsigned v) {
     // YOUR CODE HERE
-
     v &= (unsigned)1;
     *x = ((*x) & (~(1 << n))) | (v << n);
 }
@@ -23,6 +21,5 @@ void set_bit(unsigned * x,
 void flip_bit(unsigned * x,
               unsigned n) {
     // YOUR CODE HERE
-    
     *x ^= (1<<n);
 }

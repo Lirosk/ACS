@@ -30,10 +30,12 @@ void MxV(vector<vector<int>>& m, vector<int> v)
 		throw smth_about_size;
 	}
 
-	#pragma omp parallel for schedule(static, CHUNK) shared(m, v)
-    for (int i = 0; i < d1; i++)
+    int i, j;
+
+	#pragma omp parallel for schedule(static, CHUNK) shared(m, v) private(i, j)
+    for (i = 0; i < d1; i++)
     {
-        for (int j = 0; j < d2; j++)
+        for (j = 0; j < d2; j++)
         {
             m[i][j] *= v[j];
         }
@@ -68,8 +70,8 @@ int main()
         MxV(m, v);
 
         auto end = chrono::high_resolution_clock::now();
-        auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-        long long count = duration.count();
+		auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+		long long count = duration.count();
 
         printf("time: %d mcs\nnum of threads: %d\n\n", count, current_num_threads);
     }
